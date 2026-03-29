@@ -1,1 +1,796 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>نادي الإعلام والتواصل — ثانوية عبد الخالق الطريس</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;900&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+  :root {
+    --ink: #0a0c0f;
+    --ink2: #10141a;
+    --card: #181d26;
+    --card2: #1e2430;
+    --border: rgba(255,255,255,0.07);
+    --teal: #00c9a7;
+    --teal2: #00e5c4;
+    --gold: #f0b429;
+    --red: #ff4757;
+    --text: #e8eaf0;
+    --muted: #7a8499;
+    --font-display: 'Cairo', sans-serif;
+    --font-body: 'Tajawal', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ink);
+    color: var(--text);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+    cursor: none;
+    direction: rtl;
+  }
+
+  .cursor { width:12px;height:12px;background:var(--teal);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%); }
+  .cursor-ring { width:36px;height:36px;border:1.5px solid var(--teal);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform 0.15s ease;opacity:0.5; }
+
+  body::before { content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:0.4; }
+
+  /* NAV */
+  nav { position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:18px 48px;background:linear-gradient(to bottom,rgba(10,12,15,0.95),transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);transition:all 0.3s; }
+  nav.scrolled { background:rgba(10,12,15,0.97);border-bottom-color:rgba(0,201,167,0.15); }
+  .nav-logo { display:flex;align-items:center;gap:12px;text-decoration:none; }
+  .logo-badge { width:42px;height:42px;background:linear-gradient(135deg,var(--teal),var(--teal2));border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:13px;color:var(--ink);font-weight:900;box-shadow:0 0 20px rgba(0,201,167,0.4); }
+  .logo-text { font-family:var(--font-display);font-size:17px;font-weight:900;color:var(--text);line-height:1.2; }
+  .logo-sub { font-family:var(--font-body);font-size:10px;color:var(--teal); }
+  .nav-links { display:flex;gap:28px;align-items:center; }
+  .nav-links a { text-decoration:none;color:var(--muted);font-size:14px;font-weight:500;transition:color 0.2s;position:relative; }
+  .nav-links a::after { content:'';position:absolute;bottom:-4px;right:0;width:0;height:1px;background:var(--teal);transition:width 0.3s; }
+  .nav-links a:hover { color:var(--teal); }
+  .nav-links a:hover::after { width:100%; }
+  .nav-cta { padding:9px 22px;background:transparent;border:1.5px solid var(--teal);border-radius:6px;color:var(--teal)!important;font-size:13px!important;cursor:pointer;transition:all 0.2s!important; }
+  .nav-cta:hover { background:var(--teal)!important;color:var(--ink)!important; }
+  .nav-cta:hover::after { display:none!important; }
+
+  /* HERO */
+  .hero { min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 24px 80px;position:relative;overflow:hidden; }
+  .hero-bg { position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% -10%,rgba(0,201,167,0.12) 0%,transparent 60%),radial-gradient(ellipse 50% 40% at 80% 80%,rgba(240,180,41,0.06) 0%,transparent 50%),radial-gradient(ellipse 40% 30% at 20% 70%,rgba(255,71,87,0.05) 0%,transparent 50%); }
+  .hero-grid { position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 20%,transparent 80%); }
+  .hero-tag { font-family:var(--font-body);font-size:12px;letter-spacing:1px;color:var(--teal);margin-bottom:24px;display:flex;align-items:center;gap:12px;animation:fadeUp 0.8s ease both; }
+  .hero-tag::before,.hero-tag::after { content:'';display:block;width:40px;height:1px;background:var(--teal);opacity:0.5; }
+  .hero h1 { font-family:var(--font-display);font-size:clamp(52px,10vw,110px);font-weight:900;line-height:1.05;color:var(--text);animation:fadeUp 0.8s 0.15s ease both; }
+  .hero h1 span { color:var(--teal);display:block; }
+  .hero-sub { max-width:560px;margin:28px auto 0;color:var(--muted);font-size:17px;line-height:1.9;font-weight:300;animation:fadeUp 0.8s 0.3s ease both; }
+  .hero-actions { display:flex;gap:16px;justify-content:center;margin-top:40px;flex-wrap:wrap;animation:fadeUp 0.8s 0.45s ease both; }
+  .btn-primary { padding:14px 32px;background:var(--teal);color:var(--ink);border:none;border-radius:8px;font-family:var(--font-body);font-size:15px;font-weight:700;cursor:pointer;text-decoration:none;transition:all 0.25s;box-shadow:0 0 30px rgba(0,201,167,0.3); }
+  .btn-primary:hover { background:var(--teal2);transform:translateY(-2px);box-shadow:0 0 50px rgba(0,201,167,0.5); }
+  .btn-ghost { padding:14px 32px;background:transparent;color:var(--text);border:1.5px solid var(--border);border-radius:8px;font-family:var(--font-body);font-size:15px;font-weight:600;cursor:pointer;text-decoration:none;transition:all 0.25s; }
+  .btn-ghost:hover { border-color:var(--teal);color:var(--teal);transform:translateY(-2px); }
+  .hero-stats { display:flex;gap:48px;justify-content:center;margin-top:64px;animation:fadeUp 0.8s 0.6s ease both; }
+  .stat { text-align:center; }
+  .stat-num { font-family:var(--font-display);font-size:44px;font-weight:900;color:var(--teal);line-height:1; }
+  .stat-label { font-size:11px;color:var(--muted);margin-top:4px; }
+  .scroll-hint { position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;animation:bounce 2s infinite; }
+  .scroll-hint span { font-size:10px;color:var(--muted);letter-spacing:1px; }
+  .scroll-hint-line { width:1px;height:40px;background:linear-gradient(to bottom,var(--teal),transparent); }
+
+  /* TICKER */
+  .ticker { background:var(--teal);padding:12px 0;overflow:hidden;display:flex; }
+  .ticker-inner { display:flex;gap:0;white-space:nowrap;animation:ticker 30s linear infinite; }
+  .ticker-item { font-family:var(--font-body);font-size:12px;font-weight:700;color:var(--ink);padding:0 32px;display:flex;align-items:center;gap:16px; }
+  .ticker-dot { width:5px;height:5px;background:var(--ink);border-radius:50%;opacity:0.4; }
+
+  /* SECTIONS */
+  section { position:relative;z-index:1; }
+  .section-header { text-align:center;margin-bottom:56px; }
+  .section-tag { font-family:var(--font-body);font-size:11px;letter-spacing:2px;color:var(--teal);margin-bottom:12px;display:block; }
+  .section-title { font-family:var(--font-display);font-size:clamp(36px,5vw,60px);font-weight:900;color:var(--text);line-height:1.1; }
+  .section-title em { color:var(--teal);font-style:normal; }
+
+  /* FEATURED */
+  .featured { padding:100px 48px; }
+  .featured-grid { max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr;gap:24px; }
+  .card-main { background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;cursor:pointer;transition:all 0.3s;text-decoration:none;color:inherit;display:block; }
+  .card-main:hover { border-color:rgba(0,201,167,0.3);transform:translateY(-4px);box-shadow:0 24px 60px rgba(0,0,0,0.4); }
+  .card-thumb { width:100%;aspect-ratio:16/9;background:var(--card2);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center; }
+  .card-thumb-placeholder { width:100%;height:100%;display:flex;align-items:center;justify-content:center;position:relative; }
+  .thumb-gradient { position:absolute;inset:0; }
+  .thumb-icon { font-size:48px;position:relative;z-index:1; }
+  .card-main .card-thumb { aspect-ratio:16/8; }
+  .thumb-img { position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1; }
+  .card-badge { position:absolute;top:16px;right:16px;padding:4px 12px;border-radius:4px;font-family:var(--font-body);font-size:10px;font-weight:700; }
+  .badge-news { background:var(--teal);color:var(--ink); }
+  .badge-podcast { background:var(--gold);color:var(--ink); }
+  .badge-video { background:var(--red);color:white; }
+  .badge-photo { background:#7c5cbf;color:white; }
+  .card-body { padding:24px; }
+  .card-meta { display:flex;align-items:center;gap:12px;margin-bottom:12px;font-size:11px;color:var(--muted); }
+  .card-meta-dot { width:3px;height:3px;background:var(--muted);border-radius:50%; }
+  .card-title { font-family:var(--font-display);font-size:22px;font-weight:900;color:var(--text);line-height:1.2;margin-bottom:12px; }
+  .card-main .card-title { font-size:28px; }
+  .card-desc { color:var(--muted);font-size:14px;line-height:1.7;font-weight:300; }
+  .card-footer { display:flex;align-items:center;justify-content:space-between;margin-top:20px; }
+  .read-more { font-size:11px;color:var(--teal);display:flex;align-items:center;gap:6px;transition:gap 0.2s; }
+  .card-main:hover .read-more { gap:10px; }
+  .cards-side { display:flex;flex-direction:column;gap:24px; }
+  .card-side { background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;cursor:pointer;transition:all 0.3s;text-decoration:none;color:inherit;display:flex;height:100%; }
+  .card-side:hover { border-color:rgba(0,201,167,0.3);transform:translateX(-4px); }
+  .card-side .card-thumb { width:120px;min-width:120px;aspect-ratio:unset;border-radius:0; }
+  .card-side .card-body { padding:16px;flex:1; }
+  .card-side .card-title { font-size:15px;margin-bottom:6px; }
+  .card-side .card-desc { font-size:12px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden; }
+
+  /* ALL POSTS */
+  .posts { padding:80px 48px;background:var(--ink2); }
+  .posts-inner { max-width:1200px;margin:0 auto; }
+  .filters { display:flex;gap:8px;justify-content:center;margin-bottom:48px;flex-wrap:wrap; }
+  .filter-btn { padding:8px 20px;background:transparent;border:1px solid var(--border);border-radius:999px;color:var(--muted);font-family:var(--font-body);font-size:13px;cursor:pointer;transition:all 0.2s; }
+  .filter-btn:hover,.filter-btn.active { background:var(--teal);border-color:var(--teal);color:var(--ink); }
+  .posts-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:24px; }
+  .post-card { background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;cursor:pointer;transition:all 0.3s;text-decoration:none;color:inherit;display:block; }
+  .post-card:hover { border-color:rgba(0,201,167,0.25);transform:translateY(-4px);box-shadow:0 20px 40px rgba(0,0,0,0.3); }
+  .post-card .card-thumb { aspect-ratio:16/9; }
+  .post-card .card-body { padding:20px; }
+  .post-card .card-title { font-size:17px;margin-bottom:8px; }
+
+  /* PODCASTS */
+  .podcasts { padding:100px 48px; }
+  .podcasts-inner { max-width:1200px;margin:0 auto; }
+  .podcast-list { display:flex;flex-direction:column;gap:16px; }
+  .podcast-ep { background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px 28px;display:flex;align-items:center;gap:24px;cursor:pointer;transition:all 0.25s;text-decoration:none;color:inherit; }
+  .podcast-ep:hover { border-color:rgba(0,201,167,0.3);background:var(--card2);transform:translateX(-6px); }
+  .ep-num { font-family:var(--font-display);font-size:36px;font-weight:900;color:var(--border);min-width:56px;text-align:center;transition:color 0.2s; }
+  .podcast-ep:hover .ep-num { color:var(--teal); }
+  .ep-play { width:44px;height:44px;min-width:44px;border-radius:50%;background:var(--teal);color:var(--ink);display:flex;align-items:center;justify-content:center;font-size:14px;transition:transform 0.2s,box-shadow 0.2s; }
+  .podcast-ep:hover .ep-play { transform:scale(1.1);box-shadow:0 0 20px rgba(0,201,167,0.4); }
+  .ep-info { flex:1; }
+  .ep-title { font-family:var(--font-display);font-size:19px;font-weight:900;margin-bottom:4px; }
+  .ep-desc { font-size:13px;color:var(--muted);font-weight:300; }
+  .ep-meta { display:flex;gap:16px;align-items:center;font-size:11px;color:var(--muted); }
+  .ep-duration { padding:4px 10px;border:1px solid var(--border);border-radius:4px;font-size:10px; }
+  .coming-soon-badge { padding:4px 10px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:4px;font-size:10px;color:var(--muted); }
+
+  /* VIDEOS */
+  .videos { padding:80px 48px;background:var(--ink2); }
+  .videos-inner { max-width:1200px;margin:0 auto; }
+  .videos-grid { display:grid;grid-template-columns:repeat(2,1fr);gap:24px; }
+  .video-card { background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;cursor:pointer;transition:all 0.3s;text-decoration:none;color:inherit;display:block; }
+  .video-card:hover { border-color:rgba(255,71,87,0.3);transform:translateY(-4px);box-shadow:0 20px 50px rgba(0,0,0,0.4); }
+  .video-thumb { position:relative;aspect-ratio:16/9; }
+  .video-thumb .card-thumb { aspect-ratio:16/9; }
+  .play-btn { position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.3);transition:background 0.2s; }
+  .video-card:hover .play-btn { background:rgba(0,0,0,0.1); }
+  .play-circle { width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,0.15);backdrop-filter:blur(8px);border:2px solid rgba(255,255,255,0.3);display:flex;align-items:center;justify-content:center;font-size:18px;color:white;transition:transform 0.2s,background 0.2s; }
+  .video-card:hover .play-circle { transform:scale(1.15);background:var(--red);border-color:var(--red); }
+  .video-card .card-body { padding:20px; }
+  .video-card .card-title { font-size:19px; }
+
+  /* ABOUT */
+  .about { padding:120px 48px;position:relative;overflow:hidden; }
+  .about-bg { position:absolute;inset:0;background:radial-gradient(ellipse 60% 70% at 100% 50%,rgba(0,201,167,0.06) 0%,transparent 60%); }
+  .about-inner { max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center; }
+  .about-content .section-tag { text-align:right; }
+  .about-content .section-title { text-align:right;font-size:clamp(32px,4vw,50px);margin-bottom:24px; }
+  .about-text { color:var(--muted);font-size:16px;line-height:1.9;font-weight:300;margin-bottom:32px; }
+  .about-features { display:flex;flex-direction:column;gap:16px;margin-bottom:40px; }
+  .about-feat { display:flex;align-items:flex-start;gap:16px;padding:16px 20px;background:var(--card);border:1px solid var(--border);border-radius:10px;transition:border-color 0.2s; }
+  .about-feat:hover { border-color:rgba(0,201,167,0.3); }
+  .feat-icon { width:36px;height:36px;min-width:36px;border-radius:8px;background:rgba(0,201,167,0.1);display:flex;align-items:center;justify-content:center;font-size:16px; }
+  .feat-text h4 { font-size:14px;font-weight:700;margin-bottom:2px;color:var(--text); }
+  .feat-text p { font-size:12px;color:var(--muted); }
+  .about-visual { display:grid;grid-template-columns:1fr 1fr;gap:16px; }
+  .visual-card { background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px 20px;text-align:center;transition:all 0.3s; }
+  .visual-card:hover { border-color:rgba(0,201,167,0.2);transform:translateY(-4px); }
+  .visual-card:first-child { grid-column:1/-1;background:linear-gradient(135deg,rgba(0,201,167,0.08),rgba(0,201,167,0.03));border-color:rgba(0,201,167,0.2); }
+  .vc-num { font-family:var(--font-display);font-size:52px;font-weight:900;color:var(--teal);line-height:1; }
+  .vc-label { font-size:11px;color:var(--muted);margin-top:4px; }
+
+  /* SUBMIT */
+  .submit { padding:100px 48px;background:var(--ink2); }
+  .submit-inner { max-width:700px;margin:0 auto; }
+  .form-grid { display:grid;grid-template-columns:1fr 1fr;gap:16px; }
+  .form-group { display:flex;flex-direction:column;gap:8px; }
+  .form-group.full { grid-column:1/-1; }
+  .form-group label { font-size:11px;color:var(--muted);font-weight:600; }
+  .form-group input,.form-group select,.form-group textarea { background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 16px;color:var(--text);font-family:var(--font-body);font-size:14px;outline:none;transition:border-color 0.2s;resize:none;direction:rtl;-webkit-appearance:none; }
+  .form-group input:focus,.form-group select:focus,.form-group textarea:focus { border-color:var(--teal);box-shadow:0 0 0 3px rgba(0,201,167,0.1); }
+  .form-group textarea { min-height:120px; }
+  .form-submit { margin-top:24px;width:100%;padding:16px;background:var(--teal);color:var(--ink);border:none;border-radius:8px;font-family:var(--font-body);font-size:15px;font-weight:700;cursor:pointer;transition:all 0.25s;box-shadow:0 0 30px rgba(0,201,167,0.2); }
+  .form-submit:hover { background:var(--teal2);box-shadow:0 0 50px rgba(0,201,167,0.4);transform:translateY(-2px); }
+
+  /* FOOTER */
+  footer { background:var(--ink);border-top:1px solid var(--border);padding:60px 48px 32px; }
+  .footer-inner { max-width:1200px;margin:0 auto; }
+  .footer-top { display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:48px;gap:48px;flex-wrap:wrap; }
+  .footer-brand p { color:var(--muted);font-size:13px;max-width:280px;margin-top:10px;line-height:1.7; }
+  .footer-links { display:grid;grid-template-columns:repeat(3,1fr);gap:48px; }
+  .footer-col h5 { font-size:11px;color:var(--teal);margin-bottom:16px;font-weight:700; }
+  .footer-col a { display:block;text-decoration:none;color:var(--muted);font-size:13px;margin-bottom:10px;transition:color 0.2s; }
+  .footer-col a:hover { color:var(--text); }
+  .footer-bottom { border-top:1px solid var(--border);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px; }
+  .footer-bottom p { color:var(--muted);font-size:11px; }
+  .footer-social { display:flex;gap:12px; }
+  .social-btn { width:36px;height:36px;border-radius:8px;border:1px solid var(--border);background:transparent;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:14px;cursor:pointer;transition:all 0.2s;text-decoration:none; }
+  .social-btn:hover { border-color:var(--teal);color:var(--teal);background:rgba(0,201,167,0.05); }
+
+  /* MODAL */
+  .modal-overlay { position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:1000;display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;pointer-events:none;transition:opacity 0.3s;backdrop-filter:blur(8px); }
+  .modal-overlay.open { opacity:1;pointer-events:all; }
+  .modal { background:var(--card);border:1px solid rgba(0,201,167,0.2);border-radius:20px;width:100%;max-width:680px;max-height:90vh;overflow-y:auto;transform:translateY(24px);transition:transform 0.3s;direction:rtl; }
+  .modal-overlay.open .modal { transform:translateY(0); }
+  .modal-header { padding:24px 28px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:16px; }
+  .modal-title { font-family:var(--font-display);font-size:22px;font-weight:900;line-height:1.2; }
+  .modal-close { width:36px;height:36px;min-width:36px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s; }
+  .modal-close:hover { border-color:var(--red);color:var(--red); }
+  .modal-body { padding:28px; }
+  .modal-badge { display:inline-flex;align-items:center;gap:8px;margin-bottom:16px;padding:5px 12px;border-radius:6px;font-size:10px;font-weight:700; }
+  .modal-body .meta { font-size:11px;color:var(--muted);margin-bottom:20px;display:flex;gap:16px; }
+  .modal-body p { color:var(--muted);font-size:15px;line-height:1.9;font-weight:300;margin-bottom:14px; }
+  .modal-media { width:100%;border-radius:12px;margin-top:16px;border:1px solid var(--border);overflow:hidden; }
+  .modal-media video,.modal-media audio { width:100%;display:block;background:#000; }
+  .modal-media iframe { width:100%;border:none;display:block; }
+  .modal-img { width:100%;border-radius:12px;margin-top:12px;object-fit:cover; }
+  .media-placeholder { background:var(--card2);border:1px solid var(--border);border-radius:12px;aspect-ratio:16/9;display:flex;flex-direction:column;align-items:center;justify-content:center;margin-top:16px;gap:8px; }
+  .media-placeholder .big-emoji { font-size:48px; }
+  .media-placeholder span { font-size:12px;color:var(--muted); }
+
+  /* LOADING */
+  .loading-state { display:flex;align-items:center;justify-content:center;padding:80px 24px;flex-direction:column;gap:16px; }
+  .loading-spinner { width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--teal);border-radius:50%;animation:spin 0.8s linear infinite; }
+  .loading-state p { color:var(--muted);font-size:13px; }
+  .error-state { text-align:center;padding:60px 24px; }
+  .error-state p { color:var(--muted);font-size:14px;margin-top:8px; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp { from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);} }
+  @keyframes ticker { from{transform:translateX(0);}to{transform:translateX(50%);} }
+  @keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(-8px);} }
+  @keyframes pulse { 0%,100%{opacity:1;}50%{opacity:0.4;} }
+  @keyframes spin { to{transform:rotate(360deg);} }
+
+  .fade-in { opacity:0;transform:translateY(30px);transition:opacity 0.7s,transform 0.7s; }
+  .fade-in.visible { opacity:1;transform:translateY(0); }
+  .live-dot { width:6px;height:6px;background:var(--red);border-radius:50%;animation:pulse 1.5s infinite;display:inline-block; }
+
+  @media (max-width:900px) {
+    nav { padding:16px 24px; }
+    .nav-links { display:none; }
+    .featured-grid,.about-inner { grid-template-columns:1fr; }
+    .posts-grid,.videos-grid { grid-template-columns:1fr 1fr; }
+    .form-grid { grid-template-columns:1fr; }
+    .footer-links { grid-template-columns:1fr 1fr;gap:24px; }
+    .featured,.posts,.podcasts,.videos,.about,.submit { padding:60px 24px; }
+  }
+  @media (max-width:600px) {
+    .posts-grid,.videos-grid { grid-template-columns:1fr; }
+    .footer-links { grid-template-columns:1fr; }
+    .hero-stats { gap:24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">
+    <div class="logo-badge">ن.إ</div>
+    <div>
+      <div class="logo-text">نادي الإعلام والتواصل</div>
+      <div class="logo-sub">ثانوية عبد الخالق الطريس</div>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="#featured">الأبرز</a>
+    <a href="#posts">الأخبار</a>
+    <a href="#podcasts">البودكاست</a>
+    <a href="#videos">الفيديوهات</a>
+    <a href="#about">النادي</a>
+    <a href="#submit" class="nav-cta">شارك بمحتوى</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-tag"><span class="live-dot"></span> الثانوية التأهيلية عبد الخالق الطريس</div>
+  <h1>نادي الإعلام<span>والتواصل</span></h1>
+  <p class="hero-sub">صوت مدرستنا — صحافة، بودكاست، فيديو، وقصص تستحق أن تُروى. من التلاميذ وإلى التلاميذ.</p>
+  <div class="hero-actions">
+    <a href="#featured" class="btn-primary">اكتشف المحتوى</a>
+    <a href="#about" class="btn-ghost">انضم إلى النادي</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num" id="countMembers">0</div><div class="stat-label">عضو مؤسس</div></div>
+    <div class="stat"><div class="stat-num" id="countEps">0</div><div class="stat-label">حلقة بودكاست</div></div>
+    <div class="stat"><div class="stat-num" id="countPosts">0</div><div class="stat-label">مقال منشور</div></div>
+  </div>
+  <div class="scroll-hint">
+    <span>مرر للأسفل</span>
+    <div class="scroll-hint-line"></div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner" id="tickerInner">
+    <div class="ticker-item"><span class="ticker-dot"></span> عاجل: الجمع العام التأسيسي لنادي الإعلام والتواصل — 27 مارس 2026</div>
+    <div class="ticker-item"><span class="ticker-dot"></span> جديد: البودكاست الأول — الحلقة 01 متاحة الآن</div>
+    <div class="ticker-item"><span class="ticker-dot"></span> فيديو: كواليس أول تصوير لنا</div>
+    <div class="ticker-item"><span class="ticker-dot"></span> انضم إلينا: باب الانخراط مفتوح للموسم الدراسي 2025–2026</div>
+    <div class="ticker-item"><span class="ticker-dot"></span> عاجل: الجمع العام التأسيسي لنادي الإعلام والتواصل — 27 مارس 2026</div>
+    <div class="ticker-item"><span class="ticker-dot"></span> جديد: البودكاست الأول — الحلقة 01 متاحة الآن</div>
+    <div class="ticker-item"><span class="ticker-dot"></span> فيديو: كواليس أول تصوير لنا</div>
+    <div class="ticker-item"><span class="ticker-dot"></span> انضم إلينا: باب الانخراط مفتوح للموسم الدراسي 2025–2026</div>
+  </div>
+</div>
+
+<!-- FEATURED -->
+<section class="featured" id="featured">
+  <div class="section-header fade-in">
+    <span class="section-tag">// أبرز المحتويات</span>
+    <h2 class="section-title">ماذا يحدث <em>الآن</em></h2>
+  </div>
+  <div id="featuredGrid" class="featured-grid">
+    <div class="loading-state" style="grid-column:1/-1;">
+      <div class="loading-spinner"></div>
+      <p>جارٍ تحميل المحتوى...</p>
+    </div>
+  </div>
+</section>
+
+<!-- ALL POSTS -->
+<section class="posts" id="posts">
+  <div class="posts-inner">
+    <div class="section-header fade-in">
+      <span class="section-tag">// كل المحتويات</span>
+      <h2 class="section-title">تصفح <em>كل شيء</em></h2>
+    </div>
+    <div class="filters fade-in">
+      <button class="filter-btn active" onclick="filterPosts('all',this)">الكل</button>
+      <button class="filter-btn" onclick="filterPosts('news',this)">📰 أخبار</button>
+      <button class="filter-btn" onclick="filterPosts('podcast',this)">🎙️ بودكاست</button>
+      <button class="filter-btn" onclick="filterPosts('video',this)">🎬 فيديو</button>
+      <button class="filter-btn" onclick="filterPosts('photo',this)">📷 صور</button>
+    </div>
+    <div class="posts-grid" id="postsGrid">
+      <div class="loading-state" style="grid-column:1/-1;">
+        <div class="loading-spinner"></div>
+        <p>جارٍ تحميل...</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PODCASTS -->
+<section class="podcasts" id="podcasts">
+  <div class="podcasts-inner">
+    <div class="section-header fade-in">
+      <span class="section-tag">// المحتوى الصوتي</span>
+      <h2 class="section-title">حلقات <em>البودكاست</em></h2>
+    </div>
+    <div class="podcast-list fade-in" id="podcastList">
+      <div class="loading-state"><div class="loading-spinner"></div><p>جارٍ تحميل الحلقات...</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEOS -->
+<section class="videos" id="videos">
+  <div class="videos-inner">
+    <div class="section-header fade-in">
+      <span class="section-tag">// الإنتاج المرئي</span>
+      <h2 class="section-title">شاهد <em>أعمالنا</em></h2>
+    </div>
+    <div class="videos-grid" id="videosGrid">
+      <div class="loading-state" style="grid-column:1/-1;"><div class="loading-spinner"></div><p>جارٍ تحميل الفيديوهات...</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-bg"></div>
+  <div class="about-inner">
+    <div class="about-content fade-in">
+      <span class="section-tag">// عن النادي</span>
+      <h2 class="section-title">نحن <em>صوتكم</em></h2>
+      <p class="about-text">نادي الإعلام والتواصل هو غرفة تحرير تلاميذية داخل الثانوية التأهيلية عبد الخالق الطريس. نتدرب، نبتكر، وننشر — نغطي الحياة المدرسية بصدق وإبداع وهدف.</p>
+      <div class="about-features">
+        <div class="about-feat"><div class="feat-icon">📝</div><div class="feat-text"><h4>التحرير والكتابة</h4><p>التحقيق والكتابة ونشر أخبار وتقارير المؤسسة</p></div></div>
+        <div class="about-feat"><div class="feat-icon">🎙️</div><div class="feat-text"><h4>إنتاج البودكاست</h4><p>تسجيل ومونتاج وتقديم محتوى صوتي حول قضايا مدرسية</p></div></div>
+        <div class="about-feat"><div class="feat-icon">🎬</div><div class="feat-text"><h4>الفيديو والتصوير</h4><p>تصوير وتحرير وإنتاج قصص مرئية ووثائقيات</p></div></div>
+        <div class="about-feat"><div class="feat-icon">📱</div><div class="feat-text"><h4>الإعلام الرقمي</h4><p>إدارة حضور النادي على الإنترنت والتواصل الاجتماعي</p></div></div>
+      </div>
+      <a href="#submit" class="btn-primary">← انضم إلى النادي</a>
+    </div>
+    <div class="about-visual fade-in">
+      <div class="visual-card"><div class="vc-num">20</div><div class="vc-label">عضو مؤسس</div></div>
+      <div class="visual-card"><div class="vc-num">5</div><div class="vc-label">لجنة متخصصة</div></div>
+      <div class="visual-card"><div class="vc-num">1</div><div class="vc-label">موسم أُطلق</div></div>
+      <div class="visual-card"><div class="vc-num">∞</div><div class="vc-label">قصص تنتظر</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SUBMIT -->
+<section class="submit" id="submit">
+  <div class="submit-inner">
+    <div class="section-header fade-in">
+      <span class="section-tag">// شارك معنا</span>
+      <h2 class="section-title">قدّم <em>محتواك</em></h2>
+      <p style="color:var(--muted);margin-top:12px;font-size:15px;">لديك خبر، فكرة، أو قطعة إعلامية؟ أرسلها وسنراجعها للنشر.</p>
+    </div>
+    <div class="fade-in">
+      <div class="form-grid">
+        <div class="form-group"><label>اسمك</label><input type="text" placeholder="مثال: أحمد الخليل"/></div>
+        <div class="form-group"><label>قسمك</label><input type="text" placeholder="مثال: 2BSMF1"/></div>
+        <div class="form-group"><label>نوع المحتوى</label><select><option value="">اختر نوعاً...</option><option>📰 مقال إخباري</option><option>🎙️ فكرة بودكاست</option><option>🎬 مفهوم فيديو</option><option>📷 تقرير مصور</option><option>💡 فكرة أخرى</option></select></div>
+        <div class="form-group"><label>العنوان / الموضوع</label><input type="text" placeholder="أعطِ لمحتواك عنواناً..."/></div>
+        <div class="form-group full"><label>الوصف</label><textarea placeholder="صف قصتك أو فكرتك في بضع جمل..."></textarea></div>
+      </div>
+      <button class="form-submit" onclick="handleSubmit()">إرسال للمراجعة ←</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#" class="nav-logo" style="margin-bottom:12px;display:flex;">
+          <div class="logo-badge" style="width:44px;height:44px;font-size:13px;">ن.إ</div>
+          <div><div class="logo-text">نادي الإعلام والتواصل</div><div class="logo-sub">ثانوية عبد الخالق الطريس</div></div>
+        </a>
+        <p>منبر تلاميذي إعلامي — صحافة، بودكاست، فيديو، وأكثر. من طلاب ثانوية عبد الخالق الطريس.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col"><h5>المحتوى</h5><a href="#featured">آخر الأخبار</a><a href="#podcasts">البودكاست</a><a href="#videos">الفيديوهات</a><a href="#posts">كل المنشورات</a></div>
+        <div class="footer-col"><h5>النادي</h5><a href="#about">من نحن</a><a href="#submit">شارك بمحتوى</a><a href="#submit">انضم إلينا</a></div>
+        <div class="footer-col"><h5>المؤسسة</h5><a href="#">ثانوية عبد الخالق الطريس</a><a href="#">السنة الدراسية 2025–26</a><a href="#">تواصل مع النادي</a></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 نادي الإعلام والتواصل — ثانوية عبد الخالق الطريس. جميع الحقوق محفوظة.</p>
+      <div class="footer-social">
+        <a class="social-btn" href="#" title="إنستغرام">📸</a>
+        <a class="social-btn" href="#" title="يوتيوب">▶</a>
+        <a class="social-btn" href="#" title="تيك توك">🎵</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <h2 class="modal-title" id="modalTitle"></h2>
+      <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+/* ─── CONFIG ────────────────────────────────────── */
+const JSON_URL = 'https://raw.githubusercontent.com/abdellahcharafeddine622-tech/abdelh/refs/heads/main/abdelk.json';
+
+/* ─── HELPERS ───────────────────────────────────── */
+const typeConfig = {
+  news:    { badge: 'خبر',    cls: 'badge-news',    emoji: '📰', bg: 'linear-gradient(135deg,#0d2b26,#1a4a40)' },
+  podcast: { badge: 'بودكاست', cls: 'badge-podcast', emoji: '🎙️', bg: 'linear-gradient(135deg,#2b1d0a,#4a3010)' },
+  video:   { badge: 'فيديو',  cls: 'badge-video',   emoji: '🎬', bg: 'linear-gradient(135deg,#1a0d0d,#2e1515)' },
+  photo:   { badge: 'صور',   cls: 'badge-photo',   emoji: '📷', bg: 'linear-gradient(135deg,#1a0d2b,#2e154a)' },
+};
+
+function thumbHTML(item, big = false) {
+  const cfg = typeConfig[item.type] || typeConfig.news;
+  const size = big ? 48 : 28;
+  const pic = item.picture;
+  return `
+    <div class="card-thumb-placeholder">
+      <div class="thumb-gradient" style="background:${cfg.bg};"></div>
+      ${pic ? `<img class="thumb-img" src="${pic}" alt="" onerror="this.style.display='none'"/>` : ''}
+      <div class="thumb-icon" style="font-size:${size}px;">${cfg.emoji}</div>
+    </div>`;
+}
+
+function buildAllPosts(data) {
+  const items = [];
+  (data.news    || []).forEach(i => items.push({...i, type:'news'}));
+  (data.podcasts|| []).forEach(i => items.push({...i, type:'podcast'}));
+  (data.videos  || []).forEach(i => items.push({...i, type:'video'}));
+  (data.photos  || []).forEach(i => items.push({...i, type:'photo'}));
+  return items;
+}
+
+/* ─── CURSOR ────────────────────────────────────── */
+const cursor = document.getElementById('cursor');
+const ring   = document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px';});
+(function animRing(){rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing);})();
+
+/* ─── NAVBAR ────────────────────────────────────── */
+window.addEventListener('scroll',()=>document.getElementById('navbar').classList.toggle('scrolled',scrollY>60));
+
+/* ─── COUNTER ───────────────────────────────────── */
+function animCount(el,target){
+  if(!el||isNaN(target))return;
+  let v=0;const step=target/(1800/16);
+  const t=setInterval(()=>{v=Math.min(v+step,target);el.textContent=Math.floor(v);if(v>=target)clearInterval(t);},16);
+}
+
+/* ─── FADE IN OBSERVER ──────────────────────────── */
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*80);obs.unobserve(e.target);}});
+},{threshold:0.1});
+function observeFadeIns(){ document.querySelectorAll('.fade-in:not(.visible)').forEach(el=>obs.observe(el)); }
+
+/* ─── RENDER FEATURED ───────────────────────────── */
+function renderFeatured(data) {
+  const grid = document.getElementById('featuredGrid');
+  const allItems = buildAllPosts(data);
+
+  // Main = first item with featured:true, or first overall
+  const main = allItems.find(i=>i.featured) || allItems[0];
+  // Side = next 2 different items
+  const sides = allItems.filter(i=>i!==main).slice(0,2);
+
+  if (!main) { grid.innerHTML = '<div class="error-state"><p>لا يوجد محتوى بعد.</p></div>'; return; }
+
+  const cfg = typeConfig[main.type] || typeConfig.news;
+  const read = main.readTime || main.duration || '';
+
+  let mainHTML = `
+    <a class="card-main fade-in" href="#" onclick="openModal('${main.id}'); return false;">
+      <div class="card-thumb" style="aspect-ratio:16/8;">
+        ${thumbHTML(main, true)}
+        <span class="card-badge ${cfg.cls}">${cfg.badge}</span>
+      </div>
+      <div class="card-body">
+        <div class="card-meta">
+          <span>${main.date||''}</span>
+          ${main.author?`<span class="card-meta-dot"></span><span>${main.author}</span>`:''}
+          ${read?`<span class="card-meta-dot"></span><span>${read}</span>`:''}
+        </div>
+        <h3 class="card-title">${main.title}</h3>
+        <p class="card-desc">${main.description||''}</p>
+        <div class="card-footer"><span class="read-more">← اقرأ التقرير كاملاً</span></div>
+      </div>
+    </a>`;
+
+  let sidesHTML = sides.map(item => {
+    const c = typeConfig[item.type] || typeConfig.news;
+    const r = item.readTime || item.duration || '';
+    const ep = item.episode ? `الحلقة ${item.episode}` : '';
+    return `
+      <a class="card-side fade-in" href="#" onclick="openModal('${item.id}'); return false;">
+        <div class="card-thumb" style="min-width:120px;width:120px;height:auto;">
+          ${thumbHTML(item, false)}
+          <span class="card-badge ${c.cls}" style="top:8px;right:8px;font-size:9px;padding:3px 7px;">${ep||c.badge}</span>
+        </div>
+        <div class="card-body">
+          <div class="card-meta">${ep?`<span>${ep}</span><span class="card-meta-dot"></span>`:''}<span>${r||item.date||''}</span></div>
+          <h3 class="card-title">${item.title}</h3>
+          <p class="card-desc">${item.description||''}</p>
+          <span class="read-more" style="font-size:10px;margin-top:8px;display:flex;">← عرض</span>
+        </div>
+      </a>`;
+  }).join('');
+
+  grid.innerHTML = mainHTML + (sides.length ? `<div class="cards-side">${sidesHTML}</div>` : '');
+}
+
+/* ─── RENDER POSTS GRID ─────────────────────────── */
+let allPostsCache = [];
+function renderPosts(filter) {
+  const grid = document.getElementById('postsGrid');
+  const items = filter==='all' ? allPostsCache : allPostsCache.filter(p=>p.type===filter);
+  if (!items.length) {
+    grid.innerHTML = '<div class="error-state" style="grid-column:1/-1;"><p>لا يوجد محتوى في هذا القسم.</p></div>';
+    return;
+  }
+  grid.innerHTML = items.map(p => {
+    const cfg = typeConfig[p.type] || typeConfig.news;
+    const r = p.readTime || p.duration || '';
+    return `
+      <a class="post-card" href="#" onclick="openModal('${p.id}'); return false;">
+        <div class="card-thumb">
+          ${thumbHTML(p, false)}
+          <span class="card-badge ${cfg.cls}" style="right:12px;left:auto;">${cfg.badge}</span>
+        </div>
+        <div class="card-body">
+          <div class="card-meta"><span>${p.date||''}</span>${r?`<span class="card-meta-dot"></span><span>${r}</span>`:''}</div>
+          <h3 class="card-title">${p.title}</h3>
+          <p class="card-desc">${p.description||''}</p>
+          <div class="card-footer"><span class="read-more">← عرض</span></div>
+        </div>
+      </a>`;
+  }).join('');
+}
+
+function filterPosts(type, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderPosts(type);
+}
+
+/* ─── RENDER PODCASTS ───────────────────────────── */
+function renderPodcasts(podcasts) {
+  const list = document.getElementById('podcastList');
+  if (!podcasts || !podcasts.length) {
+    list.innerHTML = '<div class="error-state"><p>لا توجد حلقات بعد.</p></div>'; return;
+  }
+  list.innerHTML = podcasts.map(ep => {
+    const num = String(ep.episode||'').padStart(2,'0');
+    const coming = !ep.audio && ep.coming_soon !== false && !ep.coming_soon;
+    return `
+      <a class="podcast-ep" href="#" onclick="openModal('${ep.id}'); return false;">
+        <div class="ep-num">${num}</div>
+        <div class="ep-play">▶</div>
+        <div class="ep-info">
+          <div class="ep-title">${ep.title}</div>
+          <div class="ep-desc">${ep.description||''}</div>
+        </div>
+        <div class="ep-meta">
+          <span>${ep.date||'قريباً'}</span>
+          <span class="${ep.duration&&!coming?'ep-duration':'coming-soon-badge'}">${ep.duration||'— : —'}</span>
+        </div>
+      </a>`;
+  }).join('');
+}
+
+/* ─── RENDER VIDEOS ─────────────────────────────── */
+function renderVideos(videos) {
+  const grid = document.getElementById('videosGrid');
+  if (!videos || !videos.length) {
+    grid.innerHTML = '<div class="error-state" style="grid-column:1/-1;"><p>لا توجد فيديوهات بعد.</p></div>'; return;
+  }
+  grid.innerHTML = videos.map(v => `
+    <a class="video-card fade-in" href="#" onclick="openModal('${v.id}'); return false;">
+      <div class="video-thumb">
+        <div class="card-thumb">
+          <div class="card-thumb-placeholder">
+            <div class="thumb-gradient" style="background:linear-gradient(135deg,#1a0d0d,#2e1515,#0d0d1a);"></div>
+            ${v.picture?`<img class="thumb-img" src="${v.picture}" alt="" onerror="this.style.display='none'"/>`:''}
+            <div class="thumb-icon" style="font-size:40px;">🎬</div>
+          </div>
+        </div>
+        <div class="play-btn"><div class="play-circle">▶</div></div>
+        <span class="card-badge badge-video" style="top:12px;right:12px;">فيديو</span>
+      </div>
+      <div class="card-body">
+        <div class="card-meta"><span>${v.date||'قريباً'}</span>${v.duration?`<span class="card-meta-dot"></span><span>${v.duration}</span>`:''}</div>
+        <h3 class="card-title">${v.title}</h3>
+        <p class="card-desc">${v.description||''}</p>
+      </div>
+    </a>`).join('');
+}
+
+/* ─── MODAL OPEN ────────────────────────────────── */
+let allDataCache = {};
+
+function openModal(id) {
+  // Find item across all types
+  const allItems = buildAllPosts(allDataCache);
+  const item = allItems.find(i=>i.id===id);
+  if (!item) return;
+
+  const cfg = typeConfig[item.type] || typeConfig.news;
+  document.getElementById('modalTitle').textContent = item.title;
+
+  // Build media HTML
+  let mediaHTML = '';
+  if (item.type === 'video') {
+    if (item.video) {
+      const isYT = item.video.includes('youtube.com') || item.video.includes('youtu.be');
+      if (isYT) {
+        // Convert to embed URL
+        let embedUrl = item.video.replace('watch?v=','embed/').replace('youtu.be/','www.youtube.com/embed/');
+        mediaHTML = `<div class="modal-media" style="aspect-ratio:16/9;"><iframe src="${embedUrl}" allowfullscreen style="aspect-ratio:16/9;"></iframe></div>`;
+      } else {
+        mediaHTML = `<div class="modal-media"><video controls src="${item.video}"></video></div>`;
+      }
+    } else {
+      mediaHTML = `<div class="media-placeholder"><div class="big-emoji">🎬</div><span>الفيديو قريباً</span></div>`;
+    }
+  } else if (item.type === 'podcast') {
+    if (item.audio) {
+      mediaHTML = `<div class="modal-media" style="padding:16px;background:var(--card2);border-radius:12px;margin-top:16px;"><audio controls src="${item.audio}" style="width:100%;"></audio></div>`;
+    } else {
+      mediaHTML = `<div class="media-placeholder"><div class="big-emoji">🎙️</div><span>الصوت قريباً</span></div>`;
+    }
+  } else if (item.type === 'photo') {
+    const pics = item.pictures || (item.picture ? [item.picture] : []);
+    if (pics.length) {
+      mediaHTML = pics.map(src=>`<img class="modal-img" src="${src}" alt="" onerror="this.style.display='none'"/>`).join('');
+    }
+  }
+
+  // Author / read time
+  const meta1 = item.date || '';
+  const meta2 = item.author ? `بقلم: ${item.author}` : '';
+  const meta3 = item.readTime ? `${item.readTime} قراءة` : (item.duration||'');
+
+  document.getElementById('modalBody').innerHTML = `
+    <span class="modal-badge ${cfg.cls}">${cfg.badge}</span>
+    <div class="meta">
+      ${meta1?`<span>${meta1}</span>`:''}
+      ${meta2?`<span>${meta2}</span>`:''}
+      ${meta3?`<span>${meta3}</span>`:''}
+    </div>
+    ${item.content || `<p>${item.description||''}</p>`}
+    ${mediaHTML}`;
+
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(e){ if(e.target===document.getElementById('modalOverlay')) closeModalDirect(); }
+function closeModalDirect(){ document.getElementById('modalOverlay').classList.remove('open'); document.body.style.overflow=''; }
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModalDirect(); });
+
+/* ─── FETCH & BOOTSTRAP ─────────────────────────── */
+async function loadContent() {
+  try {
+    // Cache-bust to avoid stale GitHub CDN
+    const res = await fetch(JSON_URL + '?t=' + Date.now());
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    allDataCache = data;
+    allPostsCache = buildAllPosts(data);
+
+    // Stats counters
+    const stats = data.stats || {};
+    new IntersectionObserver(entries=>{
+      if(entries[0].isIntersecting){
+        animCount(document.getElementById('countMembers'), stats.members||0);
+        animCount(document.getElementById('countEps'),    stats.episodes||0);
+        animCount(document.getElementById('countPosts'),  stats.posts||0);
+      }
+    },{threshold:0.5}).observe(document.querySelector('.hero-stats'));
+
+    // Ticker from data
+    if (data.ticker && data.ticker.length) {
+      const inner = document.getElementById('tickerInner');
+      const doubled = [...data.ticker, ...data.ticker];
+      inner.innerHTML = doubled.map(t=>`<div class="ticker-item"><span class="ticker-dot"></span>${t}</div>`).join('');
+    }
+
+    renderFeatured(data);
+    renderPosts('all');
+    renderPodcasts(data.podcasts||[]);
+    renderVideos(data.videos||[]);
+    observeFadeIns();
+
+  } catch(err) {
+    console.error('JSON load error:', err);
+    const errMsg = '<div class="error-state"><p>⚠️ تعذّر تحميل المحتوى. تحقق من ملف JSON.</p></div>';
+    document.getElementById('featuredGrid').innerHTML = errMsg;
+    document.getElementById('postsGrid').innerHTML   = errMsg;
+    document.getElementById('podcastList').innerHTML = errMsg;
+    document.getElementById('videosGrid').innerHTML  = errMsg;
+  }
+}
+
+function handleSubmit(){
+  const btn = document.querySelector('.form-submit');
+  btn.textContent = '✓ تم الإرسال! سنراجع محتواك قريباً.';
+  setTimeout(()=>{ btn.textContent='إرسال للمراجعة ←'; }, 3500);
+}
+
+loadContent();
+</script>
+</body>
+</html>
